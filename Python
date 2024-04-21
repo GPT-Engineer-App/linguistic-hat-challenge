@@ -1,0 +1,31 @@
+def min_difference(n, skill_levels):
+    skill_levels.sort()
+    min_diff = float('inf')
+    
+    # Пробуємо кожного робота як ведучого
+    for i in range(n):
+        # Формуємо пари з решти роботів
+        pairs = []
+        for j in range(n):
+            if j != i:
+                pairs.append(skill_levels[j])
+        
+        # Розрахунок рівнів пар
+        pair_levels = []
+        for k in range((n - 1) // 2):
+            pair_levels.append(pairs[k] + pairs[-k-1])
+        
+        # Знаходимо максимальний і мінімальний рівні пар
+        max_level = max(pair_levels)
+        min_level = min(pair_levels)
+        
+        # Обчислюємо різницю для поточного ведучого
+        current_diff = max_level - min_level
+        min_diff = min(min_diff, current_diff)
+    
+    return min_diff
+
+# Приклад виклику функції
+n = 5
+skill_levels = [1, 2, 3, 4, 5]
+print(min_difference(n, skill_levels))  # Виведе мінімальну можливу різницю
